@@ -9,6 +9,7 @@ def menu():
         print("2. Generer une facture")
         print("3.Ajouter une facture")
         print("4. Quitter l'application")
+        print("5. ")
 
         choix = input("Que voulez-vous faire ?")
         if choix == "1":
@@ -28,6 +29,5 @@ def menu():
             sys.exit()
         else:
             print("Saisie incorrecte. veuillez reessayer")
-
 
 menu()
