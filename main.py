@@ -1,18 +1,24 @@
 import sys
 import time
-from utils.pdf import generer_facture_pdf
 from colorama import init, Fore, Style
-from modules.index import sous_menu_consultation
-from utils.effacer import effacer_console
-from modules.generate_facture import generer_facture
 
-# Initialiser colorama
+# Utils
+from utils.effacer import effacer_console
+from utils.pdf import generer_facture_pdf
+
+# Modules
+from modules.index import sous_menu_consultation  # Ange 1
+from modules.client import ajouter_client, verifier_code_client  # Membre 2
+from modules.produits_manager import ajouter_produit  # Membre 3
+from modules.generate_facture import generer_facture  # Membre 4
+
+# Init colorama
 init(autoreset=True)
 
 def afficher_titre(titre):
-    print(Fore.CYAN + Style.BRIGHT + "="*50)
-    print(Fore.CYAN + Style.BRIGHT + f"{titre.center(50)}")
-    print(Fore.CYAN + Style.BRIGHT + "="*50)
+    print(Fore.CYAN + Style.BRIGHT + "="*60)
+    print(Fore.CYAN + Style.BRIGHT + f"{titre.center(60)}")
+    print(Fore.CYAN + Style.BRIGHT + "="*60)
 
 def menu():
     while True:
@@ -21,37 +27,38 @@ def menu():
 
         print(Fore.GREEN + "1." + Fore.WHITE + " Consulter un fichier")
         print(Fore.GREEN + "2." + Fore.WHITE + " Générer une facture")
-        print(Fore.GREEN + "3." + Fore.WHITE + " Ajouter une facture")
+        print(Fore.GREEN + "3." + Fore.WHITE + " Ajouter un produit")
         print(Fore.RED + "4." + Fore.WHITE + " Quitter l'application")
 
-        choix = input(Fore.YELLOW + "\nQue voulez-vous faire ? " + Fore.WHITE)
+        choix = input(Fore.YELLOW + "\nVotre choix : " + Fore.WHITE)
 
         if choix == "1":
             sous_menu_consultation()
-            print(Fore.CYAN + "\nRetour au menu principal dans 2 secondes.")
-            effacer_console()
+            input(Fore.LIGHTBLUE_EX + "\nAppuyez sur Entrée pour revenir au menu...")
 
         elif choix == "2":
-            generer_facture()
-            generer_facture_pdf()
-            effacer_console()
+            facture_data = generer_facture()
+            if facture_data:
+                generer_facture_pdf(
+                    nom_client=facture_data["nom_client"],
+                    facture_num=facture_data["numero_facture"],
+                    produits=facture_data["produits"],
+                    total_ttc=facture_data["total_ttc"]
+                )
+            input(Fore.GREEN + "\nAppuyez sur Entrée pour revenir au menu...")
+
         elif choix == "3":
-            message= "chargement "
-            duree = 3
-            for i in range(duree):
-                print(message + "." * (i % 4), end="\r")
-                time.sleep(1)
-                print(" " * 30, end="\r")
-            print(Fore.BLUE + "Fonction pour générer une facture (à implémenter)")
-            effacer_console()
+            ajouter_produit()
+            input(Fore.GREEN + "\nProduit ajouté. Appuyez sur Entrée pour revenir au menu...")
 
         elif choix == "4":
-            print(Fore.MAGENTA + "Merci d'avoir utilisé l'application. À bientôt !")
-            effacer_console()
+            print(Fore.MAGENTA + "\nMerci d'avoir utilisé l'application. À bientôt !")
+            time.sleep(1)
             sys.exit()
 
         else:
-            print(Fore.RED + "Saisie incorrecte. Veuillez réessayer.")
+            print(Fore.RED + "Choix invalide. Veuillez réessayer.")
+            time.sleep(2)
 
 if __name__ == "__main__":
     menu()
