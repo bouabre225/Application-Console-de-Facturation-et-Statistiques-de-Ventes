@@ -1,43 +1,55 @@
-# main.py
+import sys
+import time
+from utils.pdf import generer_facture_pdf
+from colorama import init, Fore, Style
+from utils.index import sous_menu_consultation
+from utils.effacer import effacer_console
 
-from facture import generer_facture
-import pandas as pd
+# Initialiser colorama
+init(autoreset=True)
 
-# Appel de la fonction
-# 1. Charger les données clients
-clients_df = pd.read_excel("Clients.xlsx")
+def afficher_titre(titre):
+    print(Fore.CYAN + Style.BRIGHT + "="*50)
+    print(Fore.CYAN + Style.BRIGHT + f"{titre.center(50)}")
+    print(Fore.CYAN + Style.BRIGHT + "="*50)
 
-# 2. Saisir un client existant 
-code_client = input("Entrer le code du client : ")
-is_premiere_facture = input("Est-ce la première facture de ce client ? (oui/non) : ").strip().lower() == "oui"
+def menu():
+    while True:
+        effacer_console()
+        afficher_titre("APPLICATION DE FACTURATION")
 
-# 3. Saisir les produits achetés
-produits_commandes = {}
-while True:
-    code_produit = input("Code produit (ou taper 'fin' pour terminer) : ").strip()
-    if code_produit.lower() == "fin":
-        break
-    try:
-        quantite = int(input("Quantité : "))
-        produits_commandes[code_produit] = produits_commandes.get(code_produit, 0) + quantite
-    except ValueError:
-        print("Entrer un nombre valide pour la quantité")
+        print(Fore.GREEN + "1." + Fore.WHITE + " Consulter un fichier")
+        print(Fore.GREEN + "2." + Fore.WHITE + " Générer une facture")
+        print(Fore.GREEN + "3." + Fore.WHITE + " Ajouter une facture")
+        print(Fore.RED + "4." + Fore.WHITE + " Quitter l'application")
 
-# 4. Générer la facture
-if produits_commandes:
-    resultat = generer_facture(code_client, produits_commandes, is_premiere_facture)
+        choix = input(Fore.YELLOW + "\nQue voulez-vous faire ? " + Fore.WHITE)
 
-    print("\n========= FACTURE =========")
-    print(f"Date : {resultat['date']}")
-    print("-----------------------------")
-    for ligne in resultat['lignes']:
-        print(f"{ligne[1]} ({ligne[0]}) - {ligne[2]} x {ligne[3]} = {ligne[4]} F")
-    print("-----------------------------")
-    print(f"Total HT : {resultat['total_ht']} F")
-    if resultat['remise'] > 0:
-        print(f"Remise ({resultat['taux_remise']}%) : -{resultat['remise']} F")
-    print(f"TVA (18%) : {resultat['tva']} F")
-    print(f"TOTAL TTC : {resultat['total_ttc']} F")
-    print("=============================")
-else:
-    print("Aucun produit ajouté.")
+        if choix == "1":
+            sous_menu_consultation()
+            print(Fore.CYAN + "\nRetour au menu principal dans 2 secondes.")
+            effacer_console()
+
+        elif choix == "2":
+            generer_facture_pdf()
+            effacer_console()
+        elif choix == "3":
+            message= "chargement "
+            duree = 3
+            for i in range(duree):
+                print(message + "." * (i % 4), end="\r")
+                time.sleep(1)
+                print(" " * 30, end="\r")
+            print(Fore.BLUE + "Fonction pour générer une facture (à implémenter)")
+            effacer_console()
+
+        elif choix == "4":
+            print(Fore.MAGENTA + "Merci d'avoir utilisé l'application. À bientôt !")
+            effacer_console()
+            sys.exit()
+
+        else:
+            print(Fore.RED + "Saisie incorrecte. Veuillez réessayer.")
+
+if __name__ == "__main__":
+    menu()
