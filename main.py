@@ -2,8 +2,9 @@ import sys
 import time
 from utils.pdf import generer_facture_pdf
 from colorama import init, Fore, Style
-from utils.index import sous_menu_consultation
+from modules.index import sous_menu_consultation
 from utils.effacer import effacer_console
+from modules.generate_facture import generer_facture
 
 # Initialiser colorama
 init(autoreset=True)
@@ -31,6 +32,7 @@ def menu():
             effacer_console()
 
         elif choix == "2":
+            generer_facture()
             generer_facture_pdf()
             effacer_console()
         elif choix == "3":
