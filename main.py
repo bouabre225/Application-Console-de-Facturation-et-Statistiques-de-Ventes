@@ -1,7 +1,8 @@
 import sys 
 import os
 import time
-
+import random
+from utils.pdf import generer_facture_pdf
 def menu():
     while True:
         print("Menu principal")
@@ -18,11 +19,19 @@ def menu():
             time.sleep(3)
             os.system('cls' if os.name == 'nt' else 'clear')
         elif choix == "2":
-            print("function pour generer une facture")
-            #fonction pour generer une factur
+            #fonction pour generer une facture
+            generer_facture_pdf()
+            time.sleep(3)
+            os.system('cls' if os.name == 'nt' else 'clear')
         elif choix == "3":
             print("function pour ajouter une facture")
-            #Fonction pour ajputer une factire
+            #Fonction pour ajouter une facture
+            message= "chargement "
+            duree = 3
+            for i in range(duree):
+                print(message + "." * (i % 4), end="\r")
+                time.sleep(1)
+                print(" " * 30, end="\r")  # nettoie la ligne
         elif choix == "4":
             print("Bye bye")
             sys.exit()
