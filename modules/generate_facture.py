@@ -1,7 +1,6 @@
 # main.py
-
-from facture import generer_facture
 import pandas as pd
+from modules.facture import generer_facture
 
 # Appel de la fonction
 # 1. Charger les données clients

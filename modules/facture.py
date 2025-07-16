@@ -1,22 +1,33 @@
-# facture.py
-
 import pandas as pd
 from datetime import datetime
+import os
+
+# ---------------------------
+# Créer les fichiers Excel s'ils n'existent pas
+# ---------------------------
+if not os.path.exists("data/CartesReduction.xlsx"):
+    pd.DataFrame(columns=["numero_carte", "code_client", "taux_reduction"]).to_excel("data/CartesReduction.xlsx", index=False)
+
+if not os.path.exists("data/Clients.xlsx"):
+    pd.DataFrame(columns=["code_client", "nom", "contact", "IFU"]).to_excel("data/Clients.xlsx", index=False)
+
+if not os.path.exists("data/Produits.xlsx"):
+    pd.DataFrame(columns=["code_produit", "libelle", "prix_unitaire"]).to_excel("data/Produits.xlsx", index=False)
 
 # ---------------------------
 # Charger les fichiers Excel
 # ---------------------------
-clients_df = pd.read_excel("Clients.xlsx")
-produits_df = pd.read_excel("Produits.xlsx")
-cartes_df = pd.read_excel("CartesReduction.xlsx")
+clients_df = pd.read_excel("data/Clients.xlsx")
+produits_df = pd.read_excel("data/Produits.xlsx")
+cartes_df = pd.read_excel("data/CartesReduction.xlsx")
 
 # ---------------------------
 # Constantes
 # ---------------------------
 TAUX_TVA = 0.18
 SEUILS_REDUCTION = {
-    100000: 10,  # 10% de réduction si montant >= 100000
-    50000: 5     # 5% si montant >= 50000
+    100000: 10,
+    50000: 5
 }
 
 # ---------------------------
@@ -42,9 +53,8 @@ def creer_carte_reduction(code_client, total_ht):
                 "code_client": code_client,
                 "taux_reduction": taux
             }
-            
             cartes_df = cartes_df.append(nouvelle_carte, ignore_index=True)
-            cartes_df.to_excel("CartesReduction.xlsx", index=False)
+            cartes_df.to_excel("data/CartesReduction.xlsx", index=False)
             print(f"Carte de réduction créée ({taux}%) pour le client {code_client}")
 
 def generer_facture(code_client, produits_commandes, is_premiere_facture=False):
@@ -61,7 +71,6 @@ def generer_facture(code_client, produits_commandes, is_premiere_facture=False):
 
     tva = round(total_ht * TAUX_TVA, 2)
 
-    # Calcul de la remise
     remise = 0
     taux_remise = 0
     if not is_premiere_facture and client_a_une_carte(code_client):
@@ -71,7 +80,6 @@ def generer_facture(code_client, produits_commandes, is_premiere_facture=False):
     total_apres_remise = total_ht - remise
     total_ttc = round(total_apres_remise + tva, 2)
 
-    # Création de carte si nécessaire
     if is_premiere_facture:
         creer_carte_reduction(code_client, total_ht)
 

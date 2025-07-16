@@ -9,8 +9,9 @@ from utils.pdf import generer_facture_pdf
 # Modules
 from modules.index import sous_menu_consultation  # Ange 1
 from modules.client import ajouter_client, verifier_code_client  # Membre 2
-from modules.produits_manager import ajouter_produit  # Membre 3
-from modules.generate_facture import generer_facture  # Membre 4
+#from modules.produits_manager import ajouter_produit  # Membre 3
+from modules.facture import generer_facture  # Membre 4
+
 
 # Init colorama
 init(autoreset=True)
