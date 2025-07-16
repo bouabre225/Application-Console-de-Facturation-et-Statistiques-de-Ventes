@@ -1,14 +1,12 @@
 import sys
-import os
 import time
+from utils.pdf import generer_facture_pdf
 from colorama import init, Fore, Style
-import index  
+from utils.index import sous_menu_consultation
+from utils.effacer import effacer_console
 
 # Initialiser colorama
 init(autoreset=True)
-
-def effacer_console():
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 def afficher_titre(titre):
     print(Fore.CYAN + Style.BRIGHT + "="*50)
@@ -28,25 +26,30 @@ def menu():
         choix = input(Fore.YELLOW + "\nQue voulez-vous faire ? " + Fore.WHITE)
 
         if choix == "1":
-            index.sous_menu_consultation()
-            print(Fore.CYAN + "\nRetour au menu principal dans 2 secondes...")
-            time.sleep(2)
+            sous_menu_consultation()
+            print(Fore.CYAN + "\nRetour au menu principal dans 2 secondes.")
+            effacer_console()
 
         elif choix == "2":
-            print(Fore.BLUE + "Fonction pour générer une facture (à implémenter)")
-            time.sleep(2)
-
+            generer_facture_pdf()
+            effacer_console()
         elif choix == "3":
-            print(Fore.BLUE + "Fonction pour ajouter une facture (à implémenter)")
-            time.sleep(2)
+            message= "chargement "
+            duree = 3
+            for i in range(duree):
+                print(message + "." * (i % 4), end="\r")
+                time.sleep(1)
+                print(" " * 30, end="\r")
+            print(Fore.BLUE + "Fonction pour générer une facture (à implémenter)")
+            effacer_console()
 
         elif choix == "4":
             print(Fore.MAGENTA + "Merci d'avoir utilisé l'application. À bientôt !")
+            effacer_console()
             sys.exit()
 
         else:
             print(Fore.RED + "Saisie incorrecte. Veuillez réessayer.")
-            time.sleep(2)
 
 if __name__ == "__main__":
     menu()
