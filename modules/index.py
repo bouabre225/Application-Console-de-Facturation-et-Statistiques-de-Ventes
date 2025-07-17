@@ -2,6 +2,7 @@ from modules.consultation import afficher_clients, afficher_produits, afficher_c
 from modules.client import ajouter_client, trouver_client_par_code, donnees_sont_valides, verifier_code_client
 from colorama import init, Fore
 import os
+import time
 
 # Initialiser Colorama
 init(autoreset=True)
@@ -46,12 +47,22 @@ def sous_menu_consultation():
             )
 
             if not les_informations : 
-                print("error")
-            else : print("nice job") 
+                print(Fore.GREEN + "\nLes informations pourvu sont pas correctes!")
+                time.sleep(2)
+                sous_menu_consultation()
 
-            os.system('sleep')
-            print()
-
+            else : 
+                ajouter_client(
+                    {
+                        "code_client":["C004"],
+                        "nom":[nom],
+                        "contact":[contact],
+                        "IFU":[ifu]
+                    },
+                    "data/Clients.xlsx"
+                )
+                print(Fore.GREEN + "\nLe client a ete bien enregistre!")
+                time.sleep(2)
             break
 
         elif choix == "3":
