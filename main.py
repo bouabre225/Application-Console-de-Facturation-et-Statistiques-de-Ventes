@@ -2,7 +2,7 @@ import sys
 import os
 import time
 from colorama import init, Fore, Style
-import index  
+from modules import index  
 
 # Initialiser colorama
 init(autoreset=True)
