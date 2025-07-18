@@ -4,10 +4,10 @@ from colorama import init, Fore, Style
 
 from utils.effacer import effacer_console
 from utils.pdf import generer_facture_pdf
-
+from modules.consultation import afficher_clients, afficher_produits
 from modules.index import sous_menu_consultation
 from modules.client import ajouter_client, verifier_code_client
-from modules.produits_manager import ajouter_produit
+#from modules.produits_manager import ajouter_produit
 from modules.facture import generer_facture
 
 init(autoreset=True)
@@ -34,16 +34,18 @@ def menu():
             input(Fore.LIGHTBLUE_EX + "\nAppuyez sur Entrée pour revenir au menu...")
 
         elif choix == "2":
-            code_client = input(Fore.YELLOW + "Entrez le code du client : ").strip()
-            if not verifier_code_client(code_client):
-                print(Fore.RED + "Le code client est invalide ou inexistant.")
-                input(Fore.YELLOW + "\nAppuyez sur Entrée pour revenir au menu...")
-                continue
-
+            while True:
+                afficher_clients()
+                code_client = input(Fore.YELLOW + "Entrez le code du client : ").strip().upper()
+                if not verifier_code_client(code_client, "data/Clients.xlsx"):
+                    print(Fore.RED + "Le code client est invalide ou inexistant.")
+                    continue
+                break
             produits_commandes = []
 
             while True:
-                code_produit = input("Code du produit (ou 'q' pour terminer) : ").strip()
+                afficher_produits()
+                code_produit = input("Code du produit (ou 'q' pour terminer) : ").strip().upper()
                 if code_produit.lower() == 'q':
                     break
 
