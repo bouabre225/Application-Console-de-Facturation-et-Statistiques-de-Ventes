@@ -30,7 +30,7 @@ def menu():
 
         print(Fore.GREEN + "1." + Fore.WHITE + " Consulter un fichier")
         print(Fore.GREEN + "2." + Fore.WHITE + " Générer une facture")
-        print(Fore.GREEN + "3." + Fore.WHITE + " Ajouter une facture")
+        print(Fore.GREEN + "3." + Fore.WHITE + " Ajouter un produit")
         print(Fore.RED + "4." + Fore.WHITE + " Quitter l'application")
 
         choix = input(Fore.YELLOW + "\nQue voulez-vous faire ? " + Fore.WHITE)
