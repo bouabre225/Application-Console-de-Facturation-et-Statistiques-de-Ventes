@@ -1,6 +1,8 @@
 import sys
+import os
 import time
 from colorama import init, Fore, Style
+from modules import index  
 
 from utils.effacer import effacer_console
 from utils.pdf import generer_facture_pdf
@@ -12,10 +14,14 @@ from modules.facture import generer_facture
 
 init(autoreset=True)
 
+def effacer_console():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 def afficher_titre(titre):
-    print(Fore.CYAN + Style.BRIGHT + "=" * 60)
-    print(Fore.CYAN + Style.BRIGHT + f"{titre.center(60)}")
-    print(Fore.CYAN + Style.BRIGHT + "=" * 60)
+    print(Fore.CYAN + Style.BRIGHT + "="*50)
+    print(Fore.CYAN + Style.BRIGHT + f"{titre.center(50)}")
+    print(Fore.CYAN + Style.BRIGHT + "="*50)
+
 
 def menu():
     while True:
@@ -24,14 +30,16 @@ def menu():
 
         print(Fore.GREEN + "1." + Fore.WHITE + " Consulter un fichier")
         print(Fore.GREEN + "2." + Fore.WHITE + " Générer une facture")
-        print(Fore.GREEN + "3." + Fore.WHITE + " Ajouter un produit")
+        print(Fore.GREEN + "3." + Fore.WHITE + " Ajouter une facture")
         print(Fore.RED + "4." + Fore.WHITE + " Quitter l'application")
 
-        choix = input(Fore.YELLOW + "\nVotre choix : " + Fore.WHITE).strip()
+        choix = input(Fore.YELLOW + "\nQue voulez-vous faire ? " + Fore.WHITE)
+
 
         if choix == "1":
-            sous_menu_consultation()
-            input(Fore.LIGHTBLUE_EX + "\nAppuyez sur Entrée pour revenir au menu...")
+            index.sous_menu_consultation()
+            print(Fore.CYAN + "\nRetour au menu principal dans 2 secondes...")
+            time.sleep(2)
 
         elif choix == "2":
             code_client = input(Fore.YELLOW + "Entrez le code du client : ").strip()
@@ -78,11 +86,11 @@ def menu():
             input(Fore.GREEN + "\nAppuyez sur Entrée pour revenir au menu...")
 
         elif choix == "4":
-            print(Fore.MAGENTA + "\nMerci d'avoir utilisé l'application. À bientôt !")
-            time.sleep(1)
+            print(Fore.MAGENTA + "Merci d'avoir utilisé l'application. À bientôt !")
             sys.exit()
 
         else:
+
             print(Fore.RED + "Choix invalide. Veuillez entrer un chiffre entre 1 et 4.")
             time.sleep(2)
 
