@@ -67,6 +67,8 @@ def sous_menu_consultation():
 
         elif choix == "3":
 
+            code_client = input(Fore.GREEN + "\nSaisir " + "le code du client a rechercher")
+            trouver_client_par_code(code_client, "data/Clients.xlsx")
             break
 
         elif choix == "4":
