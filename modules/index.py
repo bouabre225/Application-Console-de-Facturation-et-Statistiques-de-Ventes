@@ -67,7 +67,7 @@ def sous_menu_consultation():
             break
 
         elif choix == "3":
-            code_client = input(Fore.GREEN + "\nSaisir " + "le code du client a rechercher")
+            code_client = input(Fore.GREEN + "\nSaisir " + "le code du client a rechercher : ")
 
             if verifier_code_client(code_client, "data/Clients.xlsx") :
 
