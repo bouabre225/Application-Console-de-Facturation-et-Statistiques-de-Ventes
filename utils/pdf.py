@@ -18,7 +18,7 @@ class FacturePDF(FPDF):
         for nom in noms:
             self.cell(0, 7, nom, ln=1)
 
-        self.ln(2)  # espace vertical
+        self.ln(2) 
         self.set_font("Arial", "", 11)
         self.cell(0, 8, f"Date : {datetime.now().strftime('%d/%m/%Y')}", ln=1, align="R")
 
@@ -28,22 +28,21 @@ class FacturePDF(FPDF):
         self.cell(0, 10, "Merci de votre confiance !", 0, 0, "C")
 
 def generer_facture_pdf(nom_client, facture_num, produits, total_ttc, fichier_pdf="facture.pdf"):
-    """Génère un fichier PDF pour la facture à partir des données fournies."""
-    # Convertir le montant en lettres
-    montant_en_lettres = num2words(total_ttc, lang="fr").capitalize() + " francs CFA"
+    try:
+        montant_en_lettres = num2words(total_ttc, lang="fr").capitalize() + " francs CFA"
+    except Exception as e:
+        print(f"Erreur lors de la conversion du montant en lettres : {e}")
+        montant_en_lettres = "Montant non convertible en lettres"
 
     pdf = FacturePDF()
     pdf.add_page()
 
-    # Infos client
     pdf.set_font("Arial", "", 12)
     pdf.cell(0, 10, f"Client : {nom_client}", ln=1)
 
-    # Titre facture
     pdf.set_font("Arial", "B", 14)
     pdf.cell(0, 10, f"FACTURE N° {facture_num}", ln=1, align="C")
 
-    # Tableau des produits
     pdf.set_font("Arial", "B", 11)
     pdf.cell(30, 10, "Code", 1)
     pdf.cell(60, 10, "Libellé", 1)
@@ -59,17 +58,17 @@ def generer_facture_pdf(nom_client, facture_num, produits, total_ttc, fichier_pd
         pdf.cell(20, 10, str(quantite), 1)
         pdf.cell(35, 10, f"{total_ht:.2f}", 1, ln=1)
 
-    # Total TTC
     pdf.ln(5)
     pdf.set_font("Arial", "B", 12)
     pdf.cell(0, 10, f"Total TTC : {total_ttc:.2f} FCFA", ln=1, align="R")
 
-    # Montant en lettres
     pdf.set_font("Arial", "", 11)
     pdf.multi_cell(0, 10, f"Arrêtée, la présente facture à la somme de : {montant_en_lettres}")
 
-    # Sauvegarder le PDF dans le dossier data
-    output_path = os.path.join("data", f"facture_{facture_num}.pdf")
-    pdf.output(output_path)
-    print(f"La facture a été générée avec succès : {output_path}")
+    output_path = os.path.join("factures", f"facture_{facture_num}.pdf")
+    try:
+        pdf.output(output_path)
+        print(f"La facture a été générée avec succès : {output_path}")
+    except Exception as e:
+        print(f"Erreur lors de la sauvegarde du PDF : {e}")
     return output_path
