@@ -130,7 +130,10 @@ def menu():
                     generer_facture_pdf(
                         nom_client=facture_data["nom_client"],
                         facture_num=facture_data["numero_facture"],
-                        produits=facture_data["produits"],
+                        lignes=facture_data["lignes"],
+                        total_ht=facture_data["total_ht"],
+                        remise=facture_data["remise"],
+                        tva=facture_data["tva"],
                         total_ttc=facture_data["total_ttc"]
                     )
                 else:
