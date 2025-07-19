@@ -13,19 +13,15 @@ def sous_menu_consultation():
         effacer_console()
         print(Fore.CYAN + "==== MENU CONSULTATION ====")
         print(Fore.GREEN + "1." + Fore.WHITE + " Afficher les clients")
-        print(Fore.GREEN + "2." + Fore.WHITE + " Ajouter un client")
-        print(Fore.GREEN + "3." + Fore.WHITE + " Rechercher un client")
-        print(Fore.GREEN + "4." + Fore.WHITE + " Afficher les produits")
-        print(Fore.GREEN + "5." + Fore.WHITE + " Afficher les cartes de fidélité")
-        print(Fore.RED + "6." + Fore.WHITE + " Retour menu principal")
+        print(Fore.GREEN + "2." + Fore.WHITE + " Afficher les produits")
+        print(Fore.GREEN + "3." + Fore.WHITE + " Afficher les cartes de fidélité")
+        print(Fore.RED + "0." + Fore.WHITE + " Retour menu principal")
 
         choix = input(Fore.YELLOW + "\nVotre choix : ")
 
         if choix == "1":
             afficher_clients()
             input(Fore.CYAN + "\nAppuyez sur Entrée pour continuer...")
-
-        elif choix == "2":
             while True:
                 nom = input(Fore.GREEN + "\nSaisir le nom du client à ajouter\n" + 
                         Fore.WHITE + "Attention, le nom doit contenir uniquement des lettres et espaces : ").strip()
@@ -81,7 +77,6 @@ def sous_menu_consultation():
                 print(Fore.RED + "\nErreur lors de l'enregistrement du client.")
             input(Fore.CYAN + "\nAppuyez sur Entrée pour continuer...")
 
-        elif choix == "3":
             code_client = input(Fore.GREEN + "\nSaisir le code du client à rechercher : ").strip().upper()
             client = trouver_client_par_code(code_client, "data/Clients.xlsx")
             if client:
@@ -93,16 +88,15 @@ def sous_menu_consultation():
             time.sleep(2)
             input(Fore.CYAN + "\nAppuyez sur Entrée pour continuer...")
 
-
-        elif choix == "4":
+        elif choix == "2":
             afficher_produits()
             input(Fore.CYAN + "\nAppuyez sur Entrée pour continuer...")
 
-        elif choix == "5":
+        elif choix == "3":
             afficher_cartes()
             input(Fore.CYAN + "\nAppuyez sur Entrée pour continuer...")
 
-        elif choix == "6":
+        elif choix == "0":
             break
 
         else:
