@@ -1,13 +1,7 @@
 
 import pandas as pd
 import os
-from data_manager import (
-    lire_fichier_excel,
-    DATA_PATH,
-    afficher_produits,
-    Fore,
-    Style
-)
+from modules.consultation import lire_fichier_excel, afficher_produits, Fore, Style
 
 def valider_code_produit(code):
     """Valide le format du code produit (6 caractères alphanumériques)"""
@@ -45,7 +39,7 @@ def ajouter_produit():
         if not valider_code_produit(code):
             print(Fore.RED + "Format invalide : code de 6 caractères (chiffres/lettres)")
         elif code_produit_existe(code, df_produits):
-            print(Fore.RED + "ERREUR : Ce code existe déjà")
+            print(Fore.RED + "ERREUR : Le produit est deja dans la liste")
         else:
             break
 
@@ -63,13 +57,13 @@ def ajouter_produit():
     # Fusion et sauvegarde
     try:
         df_final = pd.concat([df_produits, nouveau_produit], ignore_index=True)
-        df_final.to_excel(os.path.join(DATA_PATH, 'Produits.xlsx'), index=False)
+        df_final.to_excel(os.path.join('data', 'Produits.xlsx'), index=False)
         
         print(Fore.GREEN + f"\nSUCCÈS : Produit '{libelle}' ajouté (Code: {code})")
         afficher_produits()  # Utilisation de la fonction du Membre 1
         
     except Exception as e:
-        print(Fore.RED + f"\nERREUR lors de l'enregistrement : {str(e)}")
+        print(Fore.RED + f"\nERREUR lors de l'enregistrement du produit : {str(e)}")
 
 def menu_gestion_produits():
     """Menu spécifique pour le Membre 3"""
@@ -93,5 +87,5 @@ def menu_gestion_produits():
 if __name__ == "__main__":
     # Test 
     print(Fore.BLUE + "\n=== TEST DU MODULE PRODUCT_MANAGER ===")
-    print(f"Chemin des données : {DATA_PATH}")
+    print(f"Chemin des données : {os.path.join('data', 'Produits.xlsx')}")
     menu_gestion_produits()

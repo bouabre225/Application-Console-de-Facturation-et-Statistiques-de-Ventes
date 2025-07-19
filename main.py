@@ -6,10 +6,10 @@ from modules import index
 
 from utils.effacer import effacer_console
 from utils.pdf import generer_facture_pdf
-from modules.consultation import afficher_clients, afficher_produits
+from modules.consultation import afficher_clients, afficher_produits, afficher_cartes
 from modules.index import sous_menu_consultation
 from modules.client import ajouter_client, verifier_code_client
-#from modules.produits_manager import ajouter_produit
+from modules.produits_manager import ajouter_produit
 from modules.facture import generer_facture
 
 init(autoreset=True)
@@ -43,10 +43,27 @@ def menu():
 
         elif choix == "2":
             while True:
-                afficher_clients()
-                code_client = input(Fore.YELLOW + "Entrez le code du client : ").strip().upper()
-                if not verifier_code_client(code_client, "data/Clients.xlsx"):
-                    print(Fore.RED + "Le code client est invalide ou inexistant.")
+                print(Fore.YELLOW + "Est ce un nouveau client ? (oui/non) : ", end="")
+                reponse = input().strip().lower()
+                if reponse == "oui":
+                    nom_client = input(Fore.YELLOW + "Entrez le nom du client : ").strip()
+                    contact_client = input(Fore.YELLOW + "Entrez le contact du client : ").strip()
+                    if not nom_client or not contact_client:
+                        print(Fore.RED + "Nom et contact ne peuvent pas être vides.")
+                        continue
+                    donnee = {
+                        "code_client": f"C{len(afficher_clients()) + "C"+1:04}",  # Génération d'un code client sous la forme C0000X
+                        "nom": nom_client,
+                        "contact": contact_client
+                    }
+                    code_client = ajouter_client(donnee, "data/Clients.xlsx")
+                elif reponse == "non":
+                    code_client = input(Fore.YELLOW + "Entrez le code du client : ").strip().upper()
+                    if not verifier_code_client(code_client, "data/Clients.xlsx"):
+                        print(Fore.RED + "Le code du client est invalide.")
+                        continue
+                else:
+                    print(Fore.RED + "Réponse non conforme. Veuillez répondre par 'oui' ou 'non'.")
                     continue
                 break
             produits_commandes = []
