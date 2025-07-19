@@ -27,7 +27,7 @@ def menu():
         print(Fore.GREEN + "1." + Fore.WHITE + " Consulter un fichier")
         print(Fore.GREEN + "2." + Fore.WHITE + " Générer une facture")
         print(Fore.GREEN + "3." + Fore.WHITE + " Ajouter un produit")
-        print(Fore.RED + "4." + Fore.WHITE + " Quitter l'application")
+        print(Fore.RED + "0." + Fore.WHITE + " Quitter l'application")
 
         choix = input(Fore.YELLOW + "\nQue voulez-vous faire ? " + Fore.WHITE)
 
@@ -145,7 +145,7 @@ def menu():
                 print(Fore.RED + f"Erreur lors de l'ajout du produit : {e}")
             input(Fore.GREEN + "\nAppuyez sur Entrée pour revenir au menu...")
 
-        elif choix == "4":
+        elif choix == "0":
             print(Fore.MAGENTA + "Merci d'avoir utilisé l'application. À bientôt !")
             sys.exit()
 

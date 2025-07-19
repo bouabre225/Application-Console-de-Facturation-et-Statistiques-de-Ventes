@@ -68,7 +68,7 @@ def generer_facture_pdf(nom_client, facture_num, produits, total_ttc, fichier_pd
     output_path = os.path.join("factures", f"facture_{facture_num}.pdf")
     try:
         pdf.output(output_path)
-        print(f"La facture a été générée avec succès : {output_path}")
-    except Exception as e:
-        print(f"Erreur lors de la sauvegarde du PDF : {e}")
+        print(f"Facture du client  générée : {output_path}")
+    except Exception:
+        print(f"Enregistrement du PDF échoué")
     return output_path
