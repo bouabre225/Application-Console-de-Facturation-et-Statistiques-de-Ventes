@@ -28,7 +28,7 @@ def sous_menu_consultation():
         elif choix == "2":
             while True:
                 nom = input(Fore.GREEN + "\nSaisir le nom du client à ajouter\n" + 
-                           Fore.WHITE + "Attention, le nom doit contenir uniquement des lettres et espaces : ").strip()
+                        Fore.WHITE + "Attention, le nom doit contenir uniquement des lettres et espaces : ").strip()
                 if not nom:
                     print(Fore.RED + "Erreur : le nom ne peut pas être vide.")
                 elif not re.match(r'^[A-Za-zÀ-ÿ\s]+$', nom):
@@ -38,7 +38,7 @@ def sous_menu_consultation():
 
             while True:
                 contact = input(Fore.GREEN + "\nSaisir le contact du client à ajouter\n" + 
-                               Fore.WHITE + "Attention, le contact doit contenir uniquement des chiffres : ").strip()
+                        Fore.WHITE + "Attention, le contact doit contenir uniquement des chiffres : ").strip()
                 if not contact:
                     print(Fore.RED + "Erreur : le contact ne peut pas être vide.")
                 elif not contact.isdigit():
@@ -48,7 +48,7 @@ def sous_menu_consultation():
 
             while True:
                 ifu = input(Fore.GREEN + "\nSaisir l'IFU du client à ajouter (optionnel, 13 chiffres)\n" + 
-                           Fore.WHITE + "Laissez vide si aucun IFU : ").strip()
+                        Fore.WHITE + "Laissez vide si aucun IFU : ").strip()
                 if not ifu or (ifu.isdigit() and len(ifu) == 13):
                     break
                 print(Fore.RED + "Erreur : l'IFU doit être vide ou contenir exactement 13 chiffres.")

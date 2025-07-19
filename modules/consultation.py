@@ -13,8 +13,8 @@ def lire_fichier_excel(nom_fichier):
     except FileNotFoundError:
         print(Fore.RED + f"Erreur : fichier {nom_fichier} introuvable dans {DATA_PATH}.")
         return pd.DataFrame(columns=["code_client", "nom", "contact", "IFU"] if "Clients" in nom_fichier else
-                           ["code_produit", "libelle", "prix_unitaire"] if "Produits" in nom_fichier else
-                           ["numero_carte", "code_client", "taux_reduction"])
+                        ["code_produit", "libelle", "prix_unitaire"] if "Produits" in nom_fichier else
+                        ["numero_carte", "code_client", "taux_reduction"])
     except Exception as e:
         print(Fore.RED + f"Erreur lors de la lecture de {nom_fichier} : {str(e)}")
         return None
