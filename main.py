@@ -11,6 +11,7 @@ from modules.index import sous_menu_consultation
 from modules.client import ajouter_client, verifier_code_client, generer_code_client, donnees_sont_valides
 from modules.produits_manager import ajouter_produit
 from modules.facture import generer_facture
+from modules.statistiques import statistiques
 
 init(autoreset=True)
 
@@ -27,6 +28,7 @@ def menu():
         print(Fore.GREEN + "1." + Fore.WHITE + " Consulter un fichier")
         print(Fore.GREEN + "2." + Fore.WHITE + " Générer une facture")
         print(Fore.GREEN + "3." + Fore.WHITE + " Ajouter un produit")
+        print(Fore.GREEN + "4." + Fore.WHITE + " Statistiques")
         print(Fore.RED + "0." + Fore.WHITE + " Quitter l'application")
 
         choix = input(Fore.YELLOW + "\nQue voulez-vous faire ? " + Fore.WHITE)
@@ -145,6 +147,13 @@ def menu():
                 ajouter_produit()
             except Exception as e:
                 print(Fore.RED + f"Erreur lors de l'ajout du produit : {e}")
+            input(Fore.GREEN + "\nAppuyez sur Entrée pour revenir au menu...")
+
+        elif choix == "4":
+            try:
+                statistiques()
+            except Exception as e:
+                print(Fore.RED + f"Erreur lors de l'affichage des statistiques : {e}")
             input(Fore.GREEN + "\nAppuyez sur Entrée pour revenir au menu...")
 
         elif choix == "0":
