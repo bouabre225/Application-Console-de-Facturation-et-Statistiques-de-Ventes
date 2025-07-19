@@ -22,8 +22,7 @@ def generer_facture_pdf(nom_client, facture_num, lignes, total_ht, remise, tva, 
     pdf.cell(0, 10, f"FACTURE N° {facture_num}", ln=1, align="C")
 
     headers = [
-        "N°", "Code", "Libellé", "P.U.", "Qté",
-        "Total HT", "Remise", "THT remise", "TVA(18%)", "Total TTC"
+        "N°", "Code", "Libellé", "P.U.", "Qté"
     ]
     col_widths = [8, 20, 40, 18, 12, 22, 18, 22, 22, 25]
 
@@ -40,11 +39,6 @@ def generer_facture_pdf(nom_client, facture_num, lignes, total_ht, remise, tva, 
             ligne["libelle"],
             f"{ligne['pu']:.2f}",
             ligne["quantite"],
-            f"{ligne['total_ht']:.2f}",
-            f"{(ligne['total_ht'] * ligne['remise'] / 100):.2f}",
-            f"{ligne['total_avec_remise']:.2f}",
-            f"{ligne['tva']:.2f}",
-            f"{ligne['total_ttc']:.2f}"
         ]
         for i, val in enumerate(valeurs):
             pdf.cell(col_widths[i], 8, str(val), 1)
